@@ -1,0 +1,25 @@
+name: Mobile Tests
+
+on: [workflow_dispatch]  # Manually trigger tests
+
+jobs:
+  appium-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java (for Appium)
+        uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+
+      - name: Start Appium server
+        run: |
+          npm install -g appium
+          appium --port 4723 &
+
+      - name: Run Appium tests
+        run: |
+          python your_appium_test_script.py
